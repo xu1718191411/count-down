@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap 101 Template</title>
+
+    <!-- Bootstrap -->
+    <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <h1>距离
+    	<span id="h1">xxx</span><span>年</span>
+    	<span id="h2">xxx</span><span>月</span>
+    	<span id="h3">xxx</span><span>日</span>
+    	<span id="h4">xxx</span><span>时</span>
+    	<span id="h5">xxx</span><span>分</span>
+    	<span id="h6">xxx</span><span>秒</span>
+    </h1>
+
+<button type="button" id="y1" class="btn btn-primary btn-lg btn-block">Block level button</button>
+<button type="button" id="y2" class="btn btn-default btn-lg btn-block">Block level button</button>
+<button type="button" id="y3" class="btn btn-success btn-lg btn-block">Block level button</button>
+<button type="button" id="y4" class="btn btn-info btn-lg btn-block">Block level button</button>
+<button type="button" id="y5" class="btn btn-warning btn-lg btn-block">Block level button</button>
+<button type="button" id="y6" class="btn btn-danger btn-lg btn-block">Block level button</button>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  </body>
+</html>
+<script type="text/javascript">
+window.onload = function(){
+
+
+
+	setInterval(function(){
+
+		run()
+
+	},1000)
+
+
+	run()
+
+	function run(){
+
+	var dstYear = 2017
+	var dstMonth = 11
+	var dstDay = 18
+	var dstHour = 20
+	var dstMinutes = 9
+	var dstSecond = 46
+	document.getElementById("h1").innerHTML = dstYear
+	document.getElementById("h2").innerHTML = dstMonth
+	document.getElementById("h3").innerHTML = dstDay
+	document.getElementById("h4").innerHTML = dstHour
+	document.getElementById("h5").innerHTML = dstMinutes
+	document.getElementById("h6").innerHTML = dstSecond
+
+	var dstFormat = dstYear + "/" + dstMonth + "/" + dstDay + " " + dstHour + ":" + dstMinutes + ":" + dstSecond
+	var dstTime = new Date(dstFormat)
+	var dstDate = Date.parse(dstTime)/1000
+
+	var nowTime = new Date();
+	var nowDate = Date.parse(nowTime)/1000
+	
+	var nowYear = nowTime.getFullYear()
+	var nowMonth = nowTime.getMonth()+1
+	var nowDay = nowTime.getDate()
+	var nowHour = nowTime.getHours()
+	var nowMinutes = nowTime.getMinutes()
+	var nowSecond = nowTime.getSeconds()
+	var yearOffset = dstYear - nowYear
+	var Monthoffset = dstMonth - nowMonth
+	var dayOffset = dstDay - nowDay
+	var hourOffset = dstHour - nowHour
+	var minitueOffset = dstMinutes - nowMinutes
+	var secondOffset = dstSecond - nowSecond
+
+	var arr = []
+	arr.push(yearOffset)
+	arr.push(Monthoffset)
+	arr.push(dayOffset)
+	arr.push(hourOffset)
+	arr.push(minitueOffset)
+	arr.push(secondOffset)
+
+	console.log(arr)
+
+		// var arr1 = clone(arr)
+	// var result1 = fun(arr1)
+	// console.log(result1)
+
+	var arr2 = clone(arr)
+	var result2 = fun2(arr2,yearOffset,Monthoffset,dayOffset,hourOffset,minitueOffset,secondOffset)
+
+
+
+	}
+
+
+
+	//仅仅考虑年份的差值
+	function fun(arg){
+
+	for(var i in arg){
+		if(arg[i]>0){
+				arg.shift()
+			return true;
+		}else if(arg[i]<0){
+				arg.shift()
+			return false;
+		}else{
+			fun()
+		}
+	}
+
+	}
+
+
+
+	function fun2(arg,yearOffset,Monthoffset,dayOffset,hourOffset,minitueOffset,secondOffset){
+		var yarg = clone(arg)
+		yarg.shift()
+		var y = fun(yarg)?(yearOffset):(yearOffset-1)
+		console.log(y)
+		document.getElementById("y1").innerHTML = y+"年"
+
+		var marg = clone(arg)
+		marg.shift()
+		marg.shift()
+		var m = 0
+		if(Monthoffset!=0){
+			Monthoffset = Monthoffset<0?Monthoffset+12:Monthoffset
+			m = fun(marg)?(Monthoffset):(Monthoffset-1)
+		}
+
+		
+		console.log(m)
+		document.getElementById("y2").innerHTML = m+"月"
+
+		var darg = clone(arg)
+		darg.shift()
+		darg.shift()		
+		darg.shift()		
+		var d = 0
+		if(dayOffset!=0){
+		dayOffset = dayOffset<0?dayOffset+getCurrentMonthLength():dayOffset
+		d = fun(darg)?(dayOffset):(dayOffset-1)
+		}
+		
+		console.log(d)
+		document.getElementById("y3").innerHTML = d +"日"
+
+		var harg = clone(arg)
+		harg.shift()
+		harg.shift()		
+		harg.shift()			
+		harg.shift()	
+		var h = 0		
+		if(hourOffset!=0){
+		hourOffset = hourOffset<0?hourOffset+24:hourOffset
+		h = fun(harg)?(hourOffset):(hourOffset-1)
+		}
+
+		console.log(h)
+		document.getElementById("y4").innerHTML = h +"时"
+
+		var marg = clone(arg)
+		marg.shift()
+		marg.shift()		
+		marg.shift()			
+		marg.shift()	
+		marg.shift()	
+		var f = 0
+		if(minitueOffset!=0){
+		minitueOffset = minitueOffset<0?minitueOffset+60:minitueOffset
+		f = fun(marg)?(minitueOffset):(minitueOffset-1)
+		}
+		
+		console.log(f)
+		document.getElementById("y5").innerHTML = f +"分"
+
+
+		if(secondOffset!=0){
+		secondOffset = secondOffset<0?secondOffset+60:secondOffset
+		}
+		console.log(secondOffset)
+		document.getElementById("y6").innerHTML = secondOffset +"秒"
+
+	}
+
+
+	function clone(o)
+	{
+	    var f = function(){};
+	    f.prototype = o;
+	    return new f();
+	};
+
+
+	function getCurrentMonthLength(){
+		var dstFormat =  nowYear + "/" + (nowMonth+1) + "/1";
+		return new Date((new Date(dstFormat)).getTime() - 3600000).getDate()
+	}
+
+
+
+}
+
+
+
+
+</script>
